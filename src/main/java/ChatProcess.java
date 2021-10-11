@@ -4,7 +4,7 @@ import pojo.ChatPOJO;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ChatProcess {
+public class ChatProcess implements MemberRecords {
 
     private ArrayList<String> member_Messages = new ArrayList<>();
 
@@ -24,7 +24,7 @@ public class ChatProcess {
 
         for (ChatPOJO chatObj : chatARL) {
             try {
-                System.out.print("Processing: " + counter + " / " + chatSize + "\r");
+                System.out.print("Processing Chat Messages: " + counter + " / " + chatSize + "\r");
 
                 m_ID = chatObj.getAuthor().getId();
                 msg_SecondaryText = chatObj.getHeaderSecondaryText();
@@ -65,11 +65,11 @@ public class ChatProcess {
     public int getCount() {
         return count;
     }
-
-    public HashMap<String, String> getMap() {
+    @Override
+    public HashMap<String, String> getMemberMap() {
         return memberMap;
     }
-
+    @Override
     public HashMap<String, Integer> getTierCount() {
         return tierCount;
     }

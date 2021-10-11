@@ -29,7 +29,7 @@ public class TierAnalyzer {
 
         for (ChatPOJO chatObj : chatARL) {
             try {
-                System.out.print("Processing: " + counter + " / " + chatSize + "\r");
+                System.out.print("Analyzing Tier Messages: " + counter + " / " + chatSize + "\r");
 
                 m_ID = chatObj.getAuthor().getId();
                 m_Name = chatObj.getAuthor().getName();
@@ -55,9 +55,11 @@ public class TierAnalyzer {
 
     public void writeTierMessages() {
         System.out.println();
-        System.out.println("Tier Messages:");
-        tierMessages.stream().forEach(message -> System.out.println(message));
-        System.out.println();
+        if (!tierMessages.isEmpty()) {
+            System.out.println("New Tier Messages:");
+            tierMessages.stream().forEach(message -> System.out.println(message));
+            System.out.println();
+        }
     }
 
 }

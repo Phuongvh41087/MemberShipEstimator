@@ -15,7 +15,7 @@ public class OutputData {
         tierCount.forEach((K, V) -> {
             outputContent.add(K + " : " + V);
         });
-        outputContent.add("\n Member List:");
+        outputContent.add("\nMember List:");
         memberMap.forEach((K, V) -> {
             outputContent.add(outputContent.size() - (tierCount.size()+2) + ") Name: " + V + " | ID: " + K);
         });
