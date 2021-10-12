@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.stream.Stream;
@@ -21,8 +22,8 @@ public class MemberEstimator implements Callable<Integer> {
     int count = 0;
     int fileProcessed = 0;
     boolean hasArgs = true;
-    HashMap<String, String> memberMap = new HashMap<>();
-    HashMap<String, Integer> tierCount = new HashMap<>();
+    Map<String, String> memberMap = new HashMap<>();
+    Map<String, Integer> tierCount = new HashMap<>();
 
     @Option(names = {"-f", "--files"}, description = "File Names", split = ",")
     ArrayList<Path> fileNames;
@@ -74,7 +75,7 @@ public class MemberEstimator implements Callable<Integer> {
     public void processDirectory(String directoryName) {
         ArrayList<String> fileList = getFileList(directoryName);
 
-        if (!(fileList == null) && (!fileList.isEmpty())) {
+        if (!fileList.isEmpty()) {
             fileList.stream().forEach(this::processFile);
         }
     }

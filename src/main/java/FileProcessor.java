@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class FileProcessor implements MemberRecords {
     HashMap<String, String> memberMap;    //  ID, Name
@@ -12,9 +13,9 @@ public class FileProcessor implements MemberRecords {
 
     int count;
 
-    public FileProcessor(String fileName, File inputFile, HashMap<String, String> mbrMap, int mbrCount, HashMap<String, Integer> t_Count) {
-        memberMap = mbrMap;
-        tierCount = t_Count;
+    public FileProcessor(String fileName, File inputFile, Map<String, String> mbrMap, int mbrCount, Map<String, Integer> t_Count) {
+        memberMap = new HashMap<>(mbrMap);
+        tierCount = new HashMap<>(t_Count);
         count = mbrCount;
 
         try {

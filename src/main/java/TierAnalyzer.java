@@ -1,17 +1,6 @@
-import org.apache.commons.lang3.StringUtils;
 import pojo.ChatPOJO;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-
-import org.apache.commons.lang3.StringUtils;
-import pojo.ChatPOJO;
-
-import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class TierAnalyzer {
@@ -57,7 +46,7 @@ public class TierAnalyzer {
         System.out.println();
         if (!tierMessages.isEmpty()) {
             System.out.println("New Tier Messages:");
-            tierMessages.stream().forEach(message -> System.out.println(message));
+            tierMessages.stream().forEach(System.out::println);
             System.out.println();
         }
     }

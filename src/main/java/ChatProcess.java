@@ -3,6 +3,7 @@ import pojo.ChatPOJO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ChatProcess implements MemberRecords {
 
@@ -15,11 +16,11 @@ public class ChatProcess implements MemberRecords {
     private String m_Name, m_ID, m_Title, msg_Type, msg_SecondaryText;
     ArrayList<String> msgTypes = new ArrayList<>();
 
-    public ChatProcess(ArrayList<ChatPOJO> chatARL, HashMap<String, String> mbrMap, int mbrCount, HashMap<String, Integer> t_Count) {
+    public ChatProcess(ArrayList<ChatPOJO> chatARL, Map<String, String> mbrMap, int mbrCount, Map<String, Integer> t_Count) {
         int counter = 1;
         count = mbrCount;
-        memberMap = mbrMap;
-        tierCount = t_Count;
+        memberMap = new HashMap<>(mbrMap);
+        tierCount = new HashMap<>(t_Count);
         chatSize = chatARL.size();
 
         for (ChatPOJO chatObj : chatARL) {
