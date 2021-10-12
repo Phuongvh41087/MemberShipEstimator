@@ -31,6 +31,9 @@ public class MemberEstimator implements Callable<Integer> {
     @Option(names = {"-d", "--directory"}, description = "Directory Name")
     String directoryName;
 
+    @Option(names = {"-i", "--input"}, description = "Record input file")
+    String recordFileNames;
+
     private ArrayList<String> getFileList(String directory) {
         ArrayList<String> fileList = new ArrayList<>();
 
@@ -76,7 +79,7 @@ public class MemberEstimator implements Callable<Integer> {
         ArrayList<String> fileList = getFileList(directoryName);
 
         if (!fileList.isEmpty()) {
-            fileList.stream().forEach(this::processFile);
+            fileList.forEach(this::processFile);
         }
     }
 
@@ -111,6 +114,13 @@ public class MemberEstimator implements Callable<Integer> {
     public Integer call() {
 
         if (hasArgs) {
+            if ((!(recordFileNames == null)) && (!recordFileNames.trim().isEmpty())) {
+                RecordLoader recordLoader = new RecordLoader(recordFileNames);
+                memberMap = recordLoader.getMemberMap();
+                tierCount = recordLoader.getTierCount();
+                count = recordLoader.getCount();
+            }
+
             if (!(fileNames == null) && (!fileNames.isEmpty())) {
                 fileNames.stream()
                         .map(Path::toString)
@@ -123,6 +133,7 @@ public class MemberEstimator implements Callable<Integer> {
                             }
                         });
             }
+
             if ((!(directoryName == null)) && (!directoryName.trim().isEmpty())) {
                 if ((new File(directoryName).isDirectory())) {
                     processDirectory(directoryName);
@@ -151,3 +162,5 @@ public class MemberEstimator implements Callable<Integer> {
         System.exit(exitCode);
     }
 }
+
+//  chat_downloader https://www.youtube.com/watch?v=M4suZ4CuEbs --message_groups "messages superchat" --output IRyS_10Oct_ChatMsg.json

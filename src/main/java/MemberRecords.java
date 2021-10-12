@@ -1,6 +1,7 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public interface MemberRecords {
-    public HashMap<String, String> getMemberMap();
-    public HashMap<String, Integer> getTierCount();
+    Map<String, String> getMemberMap();
+    Map<String, Integer> getTierCount();
 }

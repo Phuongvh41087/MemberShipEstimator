@@ -45,7 +45,7 @@ public class TierAnalyzer {
     public void writeTierMessages() {
         System.out.println();
         if (!tierMessages.isEmpty()) {
-            System.out.println("New Tier Messages:");
+            System.out.println("Tier Messages:");
             tierMessages.stream().forEach(System.out::println);
             System.out.println();
         }
