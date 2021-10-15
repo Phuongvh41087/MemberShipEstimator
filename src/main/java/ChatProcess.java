@@ -1,5 +1,5 @@
 import org.apache.commons.lang3.StringUtils;
-import pojo.ChatPOJO;
+import pojo.inputObj.ChatPOJO;
 
 import java.util.ArrayList;
 import java.util.HashMap;

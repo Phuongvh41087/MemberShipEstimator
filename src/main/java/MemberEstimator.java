@@ -8,10 +8,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.stream.Stream;
 
@@ -24,6 +21,7 @@ public class MemberEstimator implements Callable<Integer> {
     boolean hasArgs = true;
     Map<String, String> memberMap = new HashMap<>();
     Map<String, Integer> tierCount = new HashMap<>();
+    List<String> filesProcessed = new ArrayList<>();
 
     @Option(names = {"-f", "--files"}, description = "File Names", split = ",")
     ArrayList<Path> fileNames;
@@ -33,6 +31,9 @@ public class MemberEstimator implements Callable<Integer> {
 
     @Option(names = {"-i", "--input"}, description = "Record input file")
     String recordFileNames;
+
+    @Option(names = {"-o", "--output"}, description = "Output file")
+    String outputFileName;
 
     private ArrayList<String> getFileList(String directory) {
         ArrayList<String> fileList = new ArrayList<>();
@@ -51,28 +52,37 @@ public class MemberEstimator implements Callable<Integer> {
     }
 
     public void outputFile() {
-        String outputFileName;
-
         System.out.println("*** DONE ***");
         System.out.println("==========================");
-        System.out.print("Output File name: ");
-        outputFileName = (new Scanner(System.in)).nextLine();
-        if (!outputFileName.trim().isEmpty()) {
-            OutputData outputData = new OutputData();
-            outputData.outputToFile(outputFileName, memberMap, count, tierCount);
+
+        OutputData outputData = new OutputData();
+        if ((outputFileName == null) || (outputFileName.trim().isEmpty())) {
+            System.out.print("Output File name: ");
+            outputFileName = (new Scanner(System.in)).nextLine();
+
+            if (!outputFileName.trim().isEmpty()) {
+                outputData.outputToFile(outputFileName, memberMap, count, tierCount, filesProcessed);
+            }
+        } else {
+            outputData.outputToJSON(outputFileName, memberMap, count, tierCount, filesProcessed);
         }
     }
 
     public void processFile(String fileName) {
-        File processingFile = new File(fileName);
-        FileProcessor fileProcessor = new FileProcessor(fileName, processingFile, memberMap, count, tierCount);
+        if (filesProcessed.contains(fileName)) {
+            System.out.println("File " + fileName + " has already been processed.  Move onto next file...");
+        } else {
+            File processingFile = new File(fileName);
+            FileProcessor fileProcessor = new FileProcessor(fileName, processingFile, memberMap, count, tierCount);
 
-        count = fileProcessor.getCount();
-        memberMap = fileProcessor.getMemberMap();
-        tierCount = fileProcessor.getTierCount();
-        fileProcessed++;
+            count = fileProcessor.getCount();
+            memberMap = fileProcessor.getMemberMap();
+            tierCount = fileProcessor.getTierCount();
+            filesProcessed.add(fileName);
+            fileProcessed++;
 
-        System.out.println("Files Processed: " + fileProcessed);
+            System.out.println("Files Processed: " + fileProcessed);
+        }
     }
 
     public void processDirectory(String directoryName) {
@@ -119,6 +129,7 @@ public class MemberEstimator implements Callable<Integer> {
                 memberMap = recordLoader.getMemberMap();
                 tierCount = recordLoader.getTierCount();
                 count = recordLoader.getCount();
+                filesProcessed = recordLoader.getFilesProcessed();
             }
 
             if (!(fileNames == null) && (!fileNames.isEmpty())) {

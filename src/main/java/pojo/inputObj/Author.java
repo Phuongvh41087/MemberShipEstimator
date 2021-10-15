@@ -1,4 +1,4 @@
-package pojo;
+package pojo.inputObj;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,26 +15,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
     "id",
     "images",
-    "is_custom_emoji",
     "name",
-    "search_terms",
-    "shortcuts"
+    "badges"
 })
 @Generated("jsonschema2pojo")
-public class Emote {
+public class Author {
 
     @JsonProperty("id")
     private String id;
     @JsonProperty("images")
-    private List<Image__1> images = null;
-    @JsonProperty("is_custom_emoji")
-    private Boolean isCustomEmoji;
+    private List<Image> images = null;
     @JsonProperty("name")
     private String name;
-    @JsonProperty("search_terms")
-    private List<String> searchTerms = null;
-    @JsonProperty("shortcuts")
-    private List<String> shortcuts = null;
+    @JsonProperty("badges")
+    private List<Badge> badges = null;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -49,23 +43,13 @@ public class Emote {
     }
 
     @JsonProperty("images")
-    public List<Image__1> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 
     @JsonProperty("images")
-    public void setImages(List<Image__1> images) {
+    public void setImages(List<Image> images) {
         this.images = images;
-    }
-
-    @JsonProperty("is_custom_emoji")
-    public Boolean getIsCustomEmoji() {
-        return isCustomEmoji;
-    }
-
-    @JsonProperty("is_custom_emoji")
-    public void setIsCustomEmoji(Boolean isCustomEmoji) {
-        this.isCustomEmoji = isCustomEmoji;
     }
 
     @JsonProperty("name")
@@ -78,24 +62,14 @@ public class Emote {
         this.name = name;
     }
 
-    @JsonProperty("search_terms")
-    public List<String> getSearchTerms() {
-        return searchTerms;
+    @JsonProperty("badges")
+    public List<Badge> getBadges() {
+        return badges;
     }
 
-    @JsonProperty("search_terms")
-    public void setSearchTerms(List<String> searchTerms) {
-        this.searchTerms = searchTerms;
-    }
-
-    @JsonProperty("shortcuts")
-    public List<String> getShortcuts() {
-        return shortcuts;
-    }
-
-    @JsonProperty("shortcuts")
-    public void setShortcuts(List<String> shortcuts) {
-        this.shortcuts = shortcuts;
+    @JsonProperty("badges")
+    public void setBadges(List<Badge> badges) {
+        this.badges = badges;
     }
 
     @JsonAnyGetter

@@ -1,4 +1,4 @@
-package pojo;
+package pojo.inputObj;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "width"
 })
 @Generated("jsonschema2pojo")
-public class Image__1 {
+public class Image {
 
     @JsonProperty("id")
     private String id;

@@ -1,5 +1,5 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
-import pojo.ChatPOJO;
+import pojo.inputObj.ChatPOJO;
 
 import java.io.File;
 import java.util.ArrayList;

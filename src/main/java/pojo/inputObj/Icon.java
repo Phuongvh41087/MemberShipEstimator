@@ -1,7 +1,6 @@
-package pojo;
+package pojo.inputObj;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -11,26 +10,24 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import pojo.*;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "id",
-    "images",
-    "name",
-    "badges"
+    "url",
+    "height",
+    "width"
 })
 @Generated("jsonschema2pojo")
-public class Author {
+public class Icon {
 
     @JsonProperty("id")
     private String id;
-    @JsonProperty("images")
-    private List<Image> images = null;
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("badges")
-    private List<Badge> badges = null;
+    @JsonProperty("url")
+    private String url;
+    @JsonProperty("height")
+    private Integer height;
+    @JsonProperty("width")
+    private Integer width;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -44,34 +41,34 @@ public class Author {
         this.id = id;
     }
 
-    @JsonProperty("images")
-    public List<Image> getImages() {
-        return images;
+    @JsonProperty("url")
+    public String getUrl() {
+        return url;
     }
 
-    @JsonProperty("images")
-    public void setImages(List<Image> images) {
-        this.images = images;
+    @JsonProperty("url")
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    @JsonProperty("name")
-    public String getName() {
-        return name;
+    @JsonProperty("height")
+    public Integer getHeight() {
+        return height;
     }
 
-    @JsonProperty("name")
-    public void setName(String name) {
-        this.name = name;
+    @JsonProperty("height")
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 
-    @JsonProperty("badges")
-    public List<Badge> getBadges() {
-        return badges;
+    @JsonProperty("width")
+    public Integer getWidth() {
+        return width;
     }
 
-    @JsonProperty("badges")
-    public void setBadges(List<Badge> badges) {
-        this.badges = badges;
+    @JsonProperty("width")
+    public void setWidth(Integer width) {
+        this.width = width;
     }
 
     @JsonAnyGetter

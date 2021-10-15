@@ -1,4 +1,4 @@
-import pojo.ChatPOJO;
+import pojo.inputObj.ChatPOJO;
 
 import java.util.ArrayList;
 import java.util.HashMap;

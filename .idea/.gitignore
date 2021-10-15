@@ -1,0 +1,14 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../../../:\Users\Ngoc\workspace\MemberEstimator\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Logs
+*.txt
+# Unit tests
+/src/test/
+# Chat logs and output files
+*.json

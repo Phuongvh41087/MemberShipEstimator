@@ -1,4 +1,4 @@
-package pojo;
+package pojo.inputObj;
 
 import java.util.HashMap;
 import java.util.List;
