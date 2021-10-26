@@ -25,8 +25,10 @@ public class FileProcessor implements MemberRecords {
             ChatPOJO[] chatArrays = objectMapper.readValue(inputFile, ChatPOJO[].class);
             ArrayList<ChatPOJO> chatARL = new ArrayList<>(Arrays.asList(chatArrays));
 
+            /*
             TierAnalyzer tierAnalyzer = new TierAnalyzer(chatARL);
             tierAnalyzer.writeTierMessages();
+            */
 
             ChatProcess chatProcessor = new ChatProcess(chatARL, memberMap, count, tierCount);
             count = chatProcessor.getCount();
