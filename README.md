@@ -1,1 +1,1 @@
-Youtube Membership Estimator with Chat Message & Membership Registration 
+Youtube Membership Estimator based on Chat Message & Membership Registration 

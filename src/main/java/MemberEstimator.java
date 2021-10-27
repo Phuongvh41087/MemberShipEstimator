@@ -16,12 +16,12 @@ import java.util.stream.Stream;
         description = "Estimate amount of Members based on YT Chat JSON")
 public class MemberEstimator implements Callable<Integer> {
 
-    int count = 0;
-    int fileProcessed = 0;
-    boolean hasArgs = true;
-    Map<String, String> memberMap = new HashMap<>();
-    Map<String, Integer> tierCount = new HashMap<>();
-    List<String> filesProcessed = new ArrayList<>();
+    private int count = 0;
+    private int fileProcessed = 0;
+    private boolean hasArgs = true;
+    private Map<String, String> memberMap = new HashMap<>();
+    private Map<String, Integer> tierCount = new HashMap<>();
+    private List<String> filesProcessed = new ArrayList<>();
 
     @Option(names = {"-f", "--files"}, description = "File Names", split = ",")
     ArrayList<Path> fileNames;

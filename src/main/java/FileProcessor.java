@@ -11,7 +11,7 @@ public class FileProcessor implements MemberRecords {
     HashMap<String, String> memberMap;    //  ID, Name
     HashMap<String, Integer> tierCount;
 
-    int count;
+    private int count;
 
     public FileProcessor(String fileName, File inputFile, Map<String, String> mbrMap, int mbrCount, Map<String, Integer> t_Count) {
         memberMap = new HashMap<>(mbrMap);
