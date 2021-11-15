@@ -8,14 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FileProcessor implements MemberRecords {
-    HashMap<String, String> memberMap;    //  ID, Name
-    HashMap<String, Integer> tierCount;
+    private Map<String, String> memberMap;    //  ID, Name
+    private Map<String, Integer> tierCount;
+    private Map<String, Integer> titleCount;
 
     private int count;
 
-    public FileProcessor(String fileName, File inputFile, Map<String, String> mbrMap, int mbrCount, Map<String, Integer> t_Count) {
+    public FileProcessor(String fileName, File inputFile, Map<String, String> mbrMap, int mbrCount, Map<String, Integer> t_Count, Map<String, Integer> title_Count) {
         memberMap = new HashMap<>(mbrMap);
         tierCount = new HashMap<>(t_Count);
+        titleCount = new HashMap<>(title_Count);
         count = mbrCount;
 
         try {
@@ -30,13 +32,13 @@ public class FileProcessor implements MemberRecords {
             tierAnalyzer.writeTierMessages();
             */
 
-            ChatProcess chatProcessor = new ChatProcess(chatARL, memberMap, count, tierCount);
+            ChatProcess chatProcessor = new ChatProcess(chatARL, memberMap, count, tierCount, titleCount);
             count = chatProcessor.getCount();
             memberMap = chatProcessor.getMemberMap();
             tierCount = chatProcessor.getTierCount();
+            titleCount = chatProcessor.getTitleCount();
             //
             System.out.println("Total Member Count: " + count);
-            System.out.println("********************");
         } catch (Exception ex) {
             System.out.println("Error!");
             ex.printStackTrace();
@@ -44,13 +46,16 @@ public class FileProcessor implements MemberRecords {
     }
 
     @Override
-    public HashMap<String, String> getMemberMap() {
+    public Map<String, String> getMemberMap() {
         return memberMap;
     }
-
     @Override
-    public HashMap<String, Integer> getTierCount() {
+    public Map<String, Integer> getTierCount() {
         return tierCount;
+    }
+    @Override
+    public Map<String, Integer> getTitleCount() {
+        return titleCount;
     }
 
     public int getCount() {

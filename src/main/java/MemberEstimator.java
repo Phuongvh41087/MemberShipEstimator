@@ -19,8 +19,10 @@ public class MemberEstimator implements Callable<Integer> {
     private int count = 0;
     private int fileProcessed = 0;
     private boolean hasArgs = true;
+
     private Map<String, String> memberMap = new HashMap<>();
     private Map<String, Integer> tierCount = new HashMap<>();
+    private Map<String, Integer> titleCount = new HashMap<>();
     private List<String> filesProcessed = new ArrayList<>();
 
     @Option(names = {"-f", "--files"}, description = "File Names", split = ",")
@@ -64,7 +66,7 @@ public class MemberEstimator implements Callable<Integer> {
                 outputData.outputToFile(outputFileName, memberMap, count, tierCount, filesProcessed);
             }
         } else {
-            outputData.outputToJSON(outputFileName, memberMap, count, tierCount, filesProcessed);
+            outputData.outputToJSON(outputFileName, memberMap, count, tierCount, titleCount, filesProcessed);
         }
     }
 
@@ -73,15 +75,17 @@ public class MemberEstimator implements Callable<Integer> {
             System.out.println("File " + fileName + " has already been processed.  Move onto next file...");
         } else {
             File processingFile = new File(fileName);
-            FileProcessor fileProcessor = new FileProcessor(fileName, processingFile, memberMap, count, tierCount);
+            FileProcessor fileProcessor = new FileProcessor(fileName, processingFile, memberMap, count, tierCount, titleCount);
 
             count = fileProcessor.getCount();
             memberMap = fileProcessor.getMemberMap();
             tierCount = fileProcessor.getTierCount();
+            titleCount = fileProcessor.getTitleCount();
             filesProcessed.add(fileName);
             fileProcessed++;
 
             System.out.println("Files Processed: " + fileProcessed);
+            System.out.println("********************");
         }
     }
 

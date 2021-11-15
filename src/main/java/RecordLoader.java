@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pojo.outputObj.MemberList;
+import pojo.outputObj.MemberTitle;
 import pojo.outputObj.OutputJSON;
 import pojo.outputObj.TierList;
 
@@ -17,6 +18,7 @@ public class RecordLoader implements MemberRecords {
 
     Map<String, String> memberMap;
     Map<String, Integer> tierCount;
+    Map<String, Integer> titleCount;
     List<String> filesProcessed;
     int count;
 
@@ -24,6 +26,7 @@ public class RecordLoader implements MemberRecords {
 
         memberMap = new HashMap<>();
         tierCount = new HashMap<>();
+        titleCount = new HashMap<>(); // TODO: add title counting for this
         count = 0;
 
         try (BufferedReader input = Files.newBufferedReader(Paths.get(recordFileName))) {
@@ -69,6 +72,7 @@ public class RecordLoader implements MemberRecords {
 
         memberMap = new HashMap<>();
         tierCount = new HashMap<>();
+        titleCount = new HashMap<>();
 
         count = 0;
         File inputFile = new File(recordFileName);
@@ -86,6 +90,10 @@ public class RecordLoader implements MemberRecords {
             ArrayList<TierList> tierList = new ArrayList<>(outputObject.getTierList());
             tierList.forEach(tier -> {
                 tierCount.put(tier.getTierMessage(), tier.getTierCount());
+            });
+            ArrayList<MemberTitle> titleList = new ArrayList<>(outputObject.getTitleList());
+            titleList.forEach(title -> {
+                titleCount.put(title.getmTitle_Title(), title.getmTitle_Count());
             });
             filesProcessed = new ArrayList<>(outputObject.getFilesProcessed());
 
@@ -110,6 +118,11 @@ public class RecordLoader implements MemberRecords {
     @Override
     public Map<String, Integer> getTierCount() {
         return tierCount;
+    }
+
+    @Override
+    public Map<String, Integer> getTitleCount() {
+        return titleCount;
     }
 
     public List<String> getFilesProcessed() {

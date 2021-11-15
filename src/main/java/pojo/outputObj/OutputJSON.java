@@ -11,6 +11,7 @@ import java.util.Map;
         "Total Member Found",
         "Tiers",
         "Member List",
+        "Title List",
         "File Processed"
 })
 
@@ -22,6 +23,8 @@ public class OutputJSON {
     private List<TierList> tierList;
     @JsonProperty("Member List")
     private List<MemberList> memberList;
+    @JsonProperty("Title List")
+    private List<MemberTitle> titleList;
     @JsonProperty("File Processed")
     private List<String> filesProcessed;
     @JsonIgnore
@@ -52,6 +55,15 @@ public class OutputJSON {
     @JsonProperty("Member List")
     public void setMemberList(List<MemberList> memberList) {
         this.memberList = memberList;
+    }
+
+    @JsonProperty("Title List")
+    public List<MemberTitle> getTitleList() {
+        return titleList;
+    }
+    @JsonProperty("Title List")
+    public void setTitleList(List<MemberTitle> titleList) {
+        this.titleList = titleList;
     }
 
     @JsonProperty("File Processed")

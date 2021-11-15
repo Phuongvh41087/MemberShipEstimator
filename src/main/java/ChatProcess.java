@@ -11,16 +11,20 @@ public class ChatProcess implements MemberRecords {
 
     private int count = 0;
     private int chatSize = 0;
-    private HashMap<String, String> memberMap;
-    private HashMap<String, Integer> tierCount;
+
+    private Map<String, String> memberMap;
+    private Map<String, Integer> tierCount;
+    private Map<String, Integer> titleCount;
+
     private String m_Name, m_ID, m_Title, msg_Type, msg_SecondaryText;
     ArrayList<String> msgTypes = new ArrayList<>();
 
-    public ChatProcess(ArrayList<ChatPOJO> chatARL, Map<String, String> mbrMap, int mbrCount, Map<String, Integer> t_Count) {
+    public ChatProcess(ArrayList<ChatPOJO> chatARL, Map<String, String> mbrMap, int mbrCount, Map<String, Integer> t_Count, Map<String, Integer> title_Count) {
         int counter = 1;
         count = mbrCount;
         memberMap = new HashMap<>(mbrMap);
         tierCount = new HashMap<>(t_Count);
+        titleCount = new HashMap<>(title_Count);
         chatSize = chatARL.size();
 
         for (ChatPOJO chatObj : chatARL) {
@@ -39,6 +43,7 @@ public class ChatProcess implements MemberRecords {
                         m_Title = chatObj.getAuthor().getBadges().get(0).getTitle();
                         if (StringUtils.containsIgnoreCase(m_Title, "member")) {
                             memberMap.put(m_ID, m_Name);
+                            titleCount.put(m_Title, titleCount.getOrDefault(m_Title, 0) + 1);
                             count++;
                         }
                     }
@@ -55,7 +60,7 @@ public class ChatProcess implements MemberRecords {
                     }
                 }
                 counter++;
-                Thread.sleep(5);
+                Thread.sleep(2);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -67,11 +72,15 @@ public class ChatProcess implements MemberRecords {
         return count;
     }
     @Override
-    public HashMap<String, String> getMemberMap() {
+    public Map<String, String> getMemberMap() {
         return memberMap;
     }
     @Override
-    public HashMap<String, Integer> getTierCount() {
+    public Map<String, Integer> getTierCount() {
         return tierCount;
+    }
+    @Override
+    public Map<String, Integer> getTitleCount() {
+        return titleCount;
     }
 }

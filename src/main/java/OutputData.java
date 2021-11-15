@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pojo.outputObj.MemberList;
+import pojo.outputObj.MemberTitle;
 import pojo.outputObj.OutputJSON;
 import pojo.outputObj.TierList;
 
@@ -35,13 +36,15 @@ public class OutputData {
 
     }
 
-    public void outputToJSON(String fileName, Map<String, String> memberMap, int count, Map<String, Integer> tierCount, List<String> filesProcessed) {
+    public void outputToJSON(String fileName, Map<String, String> memberMap, int count, Map<String, Integer> tierCount, Map<String, Integer> titleCount, List<String> filesProcessed) {
         try {
             TreeMap<String, String> sortedMemberMap = new TreeMap<>(memberMap);
             TreeMap<String, Integer> sortedTierCount = new TreeMap<>(tierCount);
+            TreeMap<String, Integer> sortedTitleCount = new TreeMap<>(titleCount);
 
             List<MemberList> memberList = new ArrayList<>();
             List<TierList> tierList = new ArrayList<>();
+            List<MemberTitle> titleList = new ArrayList<>();
 
             sortedMemberMap.forEach((member_ID, member_Name) -> {
                 MemberList tmpMember = new MemberList();
@@ -57,11 +60,16 @@ public class OutputData {
 
                 tierList.add(tmpTier);
             });
+            sortedTitleCount.forEach((title, title_count) -> {
+                MemberTitle tmpTitle = new MemberTitle(title, title_count);
+                titleList.add(tmpTitle);
+            });
 
             OutputJSON outputObject = new OutputJSON();
             outputObject.setTotalMember(count);
             outputObject.setMemberList(memberList);
             outputObject.setTierList(tierList);
+            outputObject.setTitleList(titleList);
             outputObject.setFilesProcessed(filesProcessed);
 
             ObjectMapper objectMapper = new ObjectMapper();
