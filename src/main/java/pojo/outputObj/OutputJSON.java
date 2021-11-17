@@ -10,8 +10,9 @@ import java.util.Map;
 @JsonPropertyOrder({
         "Total Member Found",
         "Tiers",
-        "Member List",
         "Title List",
+        "Member Header List",
+        "Member List",
         "File Processed"
 })
 
@@ -25,6 +26,8 @@ public class OutputJSON {
     private List<MemberList> memberList;
     @JsonProperty("Title List")
     private List<MemberTitle> titleList;
+    @JsonProperty("Member Header List")
+    private List<HeaderPrimaryTxt> headerPrimaryList;
     @JsonProperty("File Processed")
     private List<String> filesProcessed;
     @JsonIgnore
@@ -64,6 +67,15 @@ public class OutputJSON {
     @JsonProperty("Title List")
     public void setTitleList(List<MemberTitle> titleList) {
         this.titleList = titleList;
+    }
+
+    @JsonProperty("Member Header List")
+    public List<HeaderPrimaryTxt> getHeaderPrimaryList() {
+        return headerPrimaryList;
+    }
+    @JsonProperty("Member Header List")
+    public void setHeaderPrimaryList(List<HeaderPrimaryTxt> headerPrimaryList) {
+        this.headerPrimaryList = headerPrimaryList;
     }
 
     @JsonProperty("File Processed")

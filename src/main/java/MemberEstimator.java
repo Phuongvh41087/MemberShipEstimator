@@ -12,17 +12,18 @@ import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.stream.Stream;
 
-@Command(name = "memberEstimator", mixinStandardHelpOptions = true, version = "Member Estimator 1.1",
+@Command(name = "memberEstimator", mixinStandardHelpOptions = true, version = "Member Estimator 1.12",
         description = "Estimate amount of Members based on YT Chat JSON")
 public class MemberEstimator implements Callable<Integer> {
 
     private int count = 0;
-    private int fileProcessed = 0;
+    private int fileProcessedCount = 0;
     private boolean hasArgs = true;
 
     private Map<String, String> memberMap = new HashMap<>();
     private Map<String, Integer> tierCount = new HashMap<>();
     private Map<String, Integer> titleCount = new HashMap<>();
+    private Map<String, Integer> headerPrimaryCount = new HashMap<>();
     private List<String> filesProcessed = new ArrayList<>();
 
     @Option(names = {"-f", "--files"}, description = "File Names", split = ",")
@@ -66,7 +67,7 @@ public class MemberEstimator implements Callable<Integer> {
                 outputData.outputToFile(outputFileName, memberMap, count, tierCount, filesProcessed);
             }
         } else {
-            outputData.outputToJSON(outputFileName, memberMap, count, tierCount, titleCount, filesProcessed);
+            outputData.outputToJSON(outputFileName, memberMap, count, tierCount, titleCount, headerPrimaryCount, filesProcessed);
         }
     }
 
@@ -75,16 +76,17 @@ public class MemberEstimator implements Callable<Integer> {
             System.out.println("File " + fileName + " has already been processed.  Move onto next file...");
         } else {
             File processingFile = new File(fileName);
-            FileProcessor fileProcessor = new FileProcessor(fileName, processingFile, memberMap, count, tierCount, titleCount);
+            FileProcessor fileProcessor = new FileProcessor(fileName, processingFile, memberMap, count, tierCount, titleCount, headerPrimaryCount);
 
             count = fileProcessor.getCount();
             memberMap = fileProcessor.getMemberMap();
             tierCount = fileProcessor.getTierCount();
             titleCount = fileProcessor.getTitleCount();
+            headerPrimaryCount = fileProcessor.getHeaderPrimaryCount();
             filesProcessed.add(fileName);
-            fileProcessed++;
+            fileProcessedCount++;
 
-            System.out.println("Files Processed: " + fileProcessed);
+            System.out.println("Files Processed: " + fileProcessedCount);
             System.out.println("********************");
         }
     }
@@ -132,6 +134,8 @@ public class MemberEstimator implements Callable<Integer> {
                 RecordLoader recordLoader = new RecordLoader(recordFileNames);
                 memberMap = recordLoader.getMemberMap();
                 tierCount = recordLoader.getTierCount();
+                titleCount = recordLoader.getTitleCount();
+                headerPrimaryCount = recordLoader.getHeaderPrimaryCount();
                 count = recordLoader.getCount();
                 filesProcessed = recordLoader.getFilesProcessed();
             }

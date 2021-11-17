@@ -1,8 +1,5 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
-import pojo.outputObj.MemberList;
-import pojo.outputObj.MemberTitle;
-import pojo.outputObj.OutputJSON;
-import pojo.outputObj.TierList;
+import pojo.outputObj.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,17 +13,20 @@ import java.util.regex.Pattern;
 
 public class RecordLoader implements MemberRecords {
 
-    Map<String, String> memberMap;
-    Map<String, Integer> tierCount;
-    Map<String, Integer> titleCount;
-    List<String> filesProcessed;
-    int count;
+    private Map<String, String> memberMap;
+    private Map<String, Integer> tierCount;
+    private Map<String, Integer> titleCount;
+    private Map<String, Integer> headerPrimaryCount;
+    private List<String> filesProcessed;
+    private int count;
 
     public void TextRecordLoader(String recordFileName) {
 
         memberMap = new HashMap<>();
         tierCount = new HashMap<>();
-        titleCount = new HashMap<>(); // TODO: add title counting for this
+        titleCount = new HashMap<>();
+        // TODO: add title counting for this
+        // TODO: add header primary counting too
         count = 0;
 
         try (BufferedReader input = Files.newBufferedReader(Paths.get(recordFileName))) {
@@ -73,6 +73,7 @@ public class RecordLoader implements MemberRecords {
         memberMap = new HashMap<>();
         tierCount = new HashMap<>();
         titleCount = new HashMap<>();
+        headerPrimaryCount = new HashMap<>();
 
         count = 0;
         File inputFile = new File(recordFileName);
@@ -94,6 +95,10 @@ public class RecordLoader implements MemberRecords {
             ArrayList<MemberTitle> titleList = new ArrayList<>(outputObject.getTitleList());
             titleList.forEach(title -> {
                 titleCount.put(title.getmTitle_Title(), title.getmTitle_Count());
+            });
+            ArrayList<HeaderPrimaryTxt> headerList = new ArrayList<>(outputObject.getHeaderPrimaryList());
+            headerList.forEach(headerPrimaryText -> {
+                headerPrimaryCount.put(headerPrimaryText.getMember_Header(), headerPrimaryText.getCount());
             });
             filesProcessed = new ArrayList<>(outputObject.getFilesProcessed());
 
@@ -123,6 +128,11 @@ public class RecordLoader implements MemberRecords {
     @Override
     public Map<String, Integer> getTitleCount() {
         return titleCount;
+    }
+
+    @Override
+    public Map<String, Integer> getHeaderPrimaryCount() {
+        return headerPrimaryCount;
     }
 
     public List<String> getFilesProcessed() {

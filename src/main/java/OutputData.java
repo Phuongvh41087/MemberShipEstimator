@@ -1,8 +1,5 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
-import pojo.outputObj.MemberList;
-import pojo.outputObj.MemberTitle;
-import pojo.outputObj.OutputJSON;
-import pojo.outputObj.TierList;
+import pojo.outputObj.*;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -36,15 +33,18 @@ public class OutputData {
 
     }
 
-    public void outputToJSON(String fileName, Map<String, String> memberMap, int count, Map<String, Integer> tierCount, Map<String, Integer> titleCount, List<String> filesProcessed) {
+    public void outputToJSON(String fileName, Map<String, String> memberMap, int count, Map<String, Integer> tierCount, Map<String, Integer> titleCount,
+                             Map<String, Integer> headerPrimaryCount, List<String> filesProcessed) {
         try {
             TreeMap<String, String> sortedMemberMap = new TreeMap<>(memberMap);
             TreeMap<String, Integer> sortedTierCount = new TreeMap<>(tierCount);
             TreeMap<String, Integer> sortedTitleCount = new TreeMap<>(titleCount);
+            TreeMap<String, Integer> sortedHeaderPrimaryCount = new TreeMap<>(headerPrimaryCount);
 
             List<MemberList> memberList = new ArrayList<>();
             List<TierList> tierList = new ArrayList<>();
             List<MemberTitle> titleList = new ArrayList<>();
+            List<HeaderPrimaryTxt> headerList = new ArrayList<>();
 
             sortedMemberMap.forEach((member_ID, member_Name) -> {
                 MemberList tmpMember = new MemberList();
@@ -64,12 +64,17 @@ public class OutputData {
                 MemberTitle tmpTitle = new MemberTitle(title, title_count);
                 titleList.add(tmpTitle);
             });
+            sortedHeaderPrimaryCount.forEach((headerText, header_Count) -> {
+                HeaderPrimaryTxt tmpHeader = new HeaderPrimaryTxt(headerText, header_Count);
+                headerList.add(tmpHeader);
+            });
 
             OutputJSON outputObject = new OutputJSON();
             outputObject.setTotalMember(count);
             outputObject.setMemberList(memberList);
             outputObject.setTierList(tierList);
             outputObject.setTitleList(titleList);
+            outputObject.setHeaderPrimaryList(headerList);
             outputObject.setFilesProcessed(filesProcessed);
 
             ObjectMapper objectMapper = new ObjectMapper();

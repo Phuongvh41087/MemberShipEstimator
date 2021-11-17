@@ -5,4 +5,5 @@ public interface MemberRecords {
     Map<String, String> getMemberMap();
     Map<String, Integer> getTierCount();
     Map<String, Integer> getTitleCount();
+    Map<String, Integer> getHeaderPrimaryCount();
 }
